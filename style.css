@@ -1,0 +1,52 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+#background {
+  width: 100vw;
+  background-image: url(./Images/Planet.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  display: flex;
+  height: 100vh;
+  flex-direction: row;
+  align-items: flex-end;
+  position: relative;
+}
+#floor {
+  /* display: flex; */
+  border: 1px solid aqua;
+  width: 45vw;
+  height: 11vh;
+}
+
+#bottomFloor {
+  border: 1px solid aqua;
+  width: 30vw;
+  height: 3%;
+}
+#endFloor {
+  border: 1px solid aqua;
+  width: 26vw;
+  height: 15vh;
+}
+#actionPart {
+  border: 1px solid rgb(251, 0, 255);
+  width: 100vw;
+  height: 45vh;
+  position: absolute;
+  margin-bottom: 16vh;
+}
+.hero {
+  position: absolute;
+  height: 5rem;
+  aspect-ratio: 1;
+  border-radius: 100vh;
+  border: 2px solid black;
+  top: calc(89vh - 5rem);
+  left: 0px;
+  background-color: red;
+}
