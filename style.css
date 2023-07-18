@@ -39,6 +39,17 @@
   position: absolute;
   margin-bottom: 11vh;
 }
+
+.lifeAndScore {
+  color: white;
+  border: 1px solid rgb(21, 255, 0);
+  width: 15vw;
+  height: 15vh;
+  position: absolute;
+  margin-bottom: 80vh;
+  flex-direction: row-reverse;
+}
+
 .hero {
   position: absolute;
   /* height: 7rem; */
@@ -70,4 +81,7 @@
   background-repeat: no-repeat;
   background-position: center center;
   bottom: 0vh;
+}
+.hidden {
+  display: none;
 }

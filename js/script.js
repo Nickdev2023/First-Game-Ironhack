@@ -1,5 +1,6 @@
 const heroMoving = document.querySelector(".hero");
 let positionX = 0;
+let lives = 3;
 const mainContainer = document.querySelector("#background");
 
 const pressedKeys = { left: false, right: false };
@@ -50,8 +51,8 @@ function move(direction) {
       break;
 
     case "right":
-      if (heroBounding.right >= containerBounding.right) {
-        positionX = containerBounding.width - heroBounding.width;
+      if (heroBounding.right >= containerBounding.right - 10) {
+        positionX = containerBounding.width - heroBounding.width - 10;
       } else {
         positionX += 10;
       }
@@ -136,12 +137,20 @@ let speedIIntervalId = setInterval(() => {
   // }
 }, 2000);
 
+const lifeScore = document.querySelector(".life");
+lifeScore.textContent = 3;
+let hasBeenTouch = false;
+
 function checkCollision() {
+  const loveHearts = document.querySelectorAll(".love:not(.hidden)");
+  if (hasBeenTouch) {
+    return;
+  }
   const zombieBounding = zombieMove.getBoundingClientRect();
   const heroBounding = heroMoving.getBoundingClientRect();
   let isInX =
-    heroBounding.left < zombieBounding.right &&
-    heroBounding.right > zombieBounding.left;
+    heroBounding.left + 20 < zombieBounding.right - 20 &&
+    heroBounding.right - 20 > zombieBounding.left + 20;
 
   let isInY =
     heroBounding.bottom > zombieBounding.top &&
@@ -149,5 +158,16 @@ function checkCollision() {
 
   if (isInX && isInY) {
     console.log("touche");
+    hasBeenTouch = true;
+    setTimeout(() => {
+      hasBeenTouch = false;
+    }, 5000);
+    lives--;
+    lifeScore.textContent = lives;
+    if (lives <= 0) {
+      lifeScore.textContent = 0;
+      console.log("game over");
+    }
+    loveHearts[0].classList.add("hidden");
   }
 }
