@@ -110,7 +110,7 @@ const containerBounding = actionContainer.getBoundingClientRect();
 setInterval(() => {
   const zombieBounding = zombieMove.getBoundingClientRect();
 
-  if (zombieBounding.right >= containerBounding.right) {
+  if (zombieBounding.right >= containerBounding.right - 30) {
     // console.log(circleBounding.right, containerBounding.right);
     direction = -1;
   }
@@ -171,3 +171,22 @@ function checkCollision() {
     loveHearts[0].classList.add("hidden");
   }
 }
+
+let isFalling = false;
+
+document.addEventListener("DOMContentLoaded", () => {
+  const gifts = document.querySelector(".ironhack");
+  let top = 0;
+  let leftRandom = Math.floor(Math.random() * 650 * 2);
+  function fall() {
+    let fallId = setInterval(function () {
+      if (top > 598) {
+        clearInterval(fallId);
+      }
+      top += 30;
+      gifts.style.top = top + "px";
+    }, 20);
+  }
+  gifts.style.left = leftRandom + "px";
+  fall();
+});

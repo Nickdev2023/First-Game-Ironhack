@@ -85,3 +85,9 @@
 .hidden {
   display: none;
 }
+
+.ironhack {
+  width: 5rem;
+  position: absolute;
+  top: 0;
+}
