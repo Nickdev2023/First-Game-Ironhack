@@ -110,3 +110,56 @@
   margin-bottom: 80vh;
   margin-left: 40vw;
 }
+
+#firstScreen {
+  background-image: url(./Images/Planet.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  display: flex;
+  height: 100vh;
+}
+
+#finishScreen {
+  background-image: url(./Images/Planet.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  display: flex;
+  height: 100vh;
+}
+
+#startButton {
+  position: absolute;
+  border: none;
+  top: 70vh;
+  left: 48vw;
+  background: #ffffff;
+  background-image: -webkit-linear-gradient(top, #ffffff, #7401e0);
+  background-image: -moz-linear-gradient(top, #ffffff, #6721ff);
+  background-image: -ms-linear-gradient(top, #ffffff, #6721ff);
+  background-image: -o-linear-gradient(top, #ffffff, #6721ff);
+  background-image: linear-gradient(to bottom, #ffffff, #6721ff);
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  text-shadow: 3px 1px 3px #fa61fa;
+  -webkit-box-shadow: 2px 1px 3px #ffffff;
+  -moz-box-shadow: 2px 1px 3px #ffffff;
+  box-shadow: 2px 1px 3px #ffffff;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 34px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+#startButton:hover {
+  background: #ffffff;
+  background-image: -webkit-linear-gradient(top, #ffffff, #a200ff);
+  background-image: -moz-linear-gradient(top, #ffffff, #a200ff);
+  background-image: -ms-linear-gradient(top, #ffffff, #a200ff);
+  background-image: -o-linear-gradient(top, #ffffff, #a200ff);
+  background-image: linear-gradient(to bottom, #ffffff, #a200ff);
+  text-decoration: none;
+  border: none;
+}
