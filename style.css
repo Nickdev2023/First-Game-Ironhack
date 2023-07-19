@@ -58,7 +58,7 @@
   /* border-radius: 100vh; */
   /* border: 2px solid black; */
   /* top: calc(89vh - 5rem); */
-  left: 0px;
+  left: 700px;
   /* background-color: red; */
   background-image: url(./Images/Run.png);
   background-size: contain;
@@ -90,4 +90,23 @@
   width: 5rem;
   position: absolute;
   top: 0;
+}
+
+.score {
+  color: white;
+  border: 1px solid rgb(58, 51, 238);
+  width: 15vw;
+  height: 15vh;
+  position: absolute;
+  margin-bottom: 80vh;
+  margin-left: 80vw;
+}
+.levelDisplay {
+  color: white;
+  border: 1px solid rgb(255, 255, 255);
+  width: 15vw;
+  height: 15vh;
+  position: absolute;
+  margin-bottom: 80vh;
+  margin-left: 40vw;
 }

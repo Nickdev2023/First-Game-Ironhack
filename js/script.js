@@ -1,5 +1,5 @@
 const heroMoving = document.querySelector(".hero");
-let positionX = 0;
+let positionX = 700;
 let lives = 3;
 const mainContainer = document.querySelector("#background");
 
@@ -120,7 +120,7 @@ setInterval(() => {
   bouncingCircleX += speed * direction;
 
   zombieMove.style.left = `${bouncingCircleX}px`;
-
+  checkScore();
   if (checkCollision()) {
     console.log("lose life");
   }
@@ -174,8 +174,9 @@ function checkCollision() {
 
 let isFalling = false;
 
-document.addEventListener("DOMContentLoaded", () => {
-  const gifts = document.querySelector(".ironhack");
+const gifts = document.querySelector(".ironhack");
+setInterval(() => {
+  gifts.classList.remove("hidden");
   let top = 0;
   let leftRandom = Math.floor(Math.random() * 650 * 2);
   function fall() {
@@ -189,4 +190,45 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   gifts.style.left = leftRandom + "px";
   fall();
-});
+}, 4000);
+
+const scoreNumber = document.querySelector(".scoreNumber");
+scoreNumber.textContent = 0;
+let score = 0;
+// const gifts = document.querySelector(".ironhack");
+
+function checkScore() {
+  // if (hasBeenTouch) {
+  //   return;
+  // }
+  const giftsBounding = gifts.getBoundingClientRect();
+  const heroBounding = heroMoving.getBoundingClientRect();
+
+  let isInX =
+    heroBounding.left + 20 < giftsBounding.right - 20 &&
+    heroBounding.right - 20 > giftsBounding.left + 20;
+  console.log(isInX);
+  let isInY =
+    heroBounding.bottom > giftsBounding.top &&
+    heroBounding.top < giftsBounding.bottom;
+
+  if (isInX && isInY) {
+    console.log("scored");
+    // hasBeenTouch = true;
+    // setTimeout(() => {
+    //   hasBeenTouch = false;
+    // }, 5000);
+    score++;
+    scoreNumber.textContent = score;
+    gifts.classList.add("hidden");
+  }
+}
+
+const LevelToDisplay = document.querySelector(".level");
+LevelToDisplay.textContent = 0;
+let Level = 0;
+
+setInterval(() => {
+  Level++;
+  LevelToDisplay.textContent = Level;
+}, 25000);
