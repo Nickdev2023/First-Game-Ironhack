@@ -7,6 +7,12 @@
     <link rel="stylesheet" href="./style.css" />
     <script src="./js/player.js"></script>
     <script src="./js/script.js" type="module"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div id="firstScreen">
@@ -15,11 +21,15 @@
     <div id="background">
       <img class="ironhack hidden" src="./Images/IronHack.png" alt="" />
       <div class="lifeAndScore">
-        <h2>Lifes</h2>
-        <p class="life">3</p>
-        <img class="love" src="./Images/love.png" alt="" />
-        <img class="love" src="./Images/love.png" alt="" />
-        <img class="love" src="./Images/love.png" alt="" />
+        <h2>Life</h2>
+        <div class="lifeDisplay">
+          <p class="life">5</p>
+          <img class="love" src="./Images/love.png" alt="" />
+          <img class="love" src="./Images/love.png" alt="" />
+          <img class="love" src="./Images/love.png" alt="" />
+          <img class="love" src="./Images/love.png" alt="" />
+          <img class="love" src="./Images/love.png" alt="" />
+        </div>
       </div>
       <div class="score">
         <h2>Score</h2>
@@ -38,7 +48,7 @@
       </div>
     </div>
     <div id="finishScreen">
-      <button id="startButton">Retry</button>
+      <button id="finishButton">Retry</button>
     </div>
   </body>
 </html>

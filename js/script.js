@@ -12,7 +12,7 @@ function startGame() {
   firstScreen.style.display = "none";
   const heroMoving = document.querySelector(".hero");
   let positionX = 700;
-  let lives = 3;
+  let lives = 5;
   const mainContainer = document.querySelector("#background");
 
   const pressedKeys = { left: false, right: false };
@@ -38,7 +38,7 @@ function startGame() {
     }
   });
 
-  setInterval(() => {
+  let keyInter = setInterval(() => {
     for (const key in pressedKeys) {
       if (pressedKeys[key]) {
         move(key);
@@ -119,7 +119,7 @@ function startGame() {
   const actionContainer = document.querySelector(".actionPart");
   const containerBounding = actionContainer.getBoundingClientRect();
 
-  setInterval(() => {
+  let zombieMoove = setInterval(() => {
     const zombieBounding = zombieMove.getBoundingClientRect();
 
     if (zombieBounding.right >= containerBounding.right - 30) {
@@ -150,11 +150,12 @@ function startGame() {
   }, 2000);
 
   const lifeScore = document.querySelector(".life");
-  lifeScore.textContent = 3;
+  lifeScore.textContent = 5;
   let hasBeenTouch = false;
 
   function checkCollision() {
     const loveHearts = document.querySelectorAll(".love:not(.hidden)");
+
     if (hasBeenTouch) {
       return;
     }
@@ -171,7 +172,7 @@ function startGame() {
     if (isInX && isInY) {
       console.log("touche");
       hasBeenTouch = true;
-      setTimeout(() => {
+      let touchInt = setTimeout(() => {
         hasBeenTouch = false;
       }, 5000);
       lives--;
@@ -181,6 +182,7 @@ function startGame() {
         console.log("game over");
         finishScreen.style.display = "flex";
         background.style.display = "none";
+        return;
       }
       loveHearts[0].classList.add("hidden");
     }
@@ -189,7 +191,7 @@ function startGame() {
   let isFalling = false;
 
   const gifts = document.querySelector(".ironhack");
-  setInterval(() => {
+  let dropIron = setInterval(() => {
     gifts.classList.remove("hidden");
     let top = 0;
     let leftRandom = Math.floor(Math.random() * 650 * 2);
@@ -234,8 +236,28 @@ function startGame() {
   LevelToDisplay.textContent = 0;
   let Level = 0;
 
-  setInterval(() => {
+  let levelInterval = setInterval(() => {
     Level++;
     LevelToDisplay.textContent = Level;
   }, 25000);
 }
+const finishButton = document.getElementById("finishButton");
+finishButton.addEventListener("click", () => {
+  location.reload();
+  // background.style.display = "none";
+  // finishScreen.style.display = "none";
+  // firstScreen.style.display = "flex";
+  // const lifeScore = document.querySelector(".life");
+  // lifeScore.textContent = "";
+  // const scoreNumber = document.querySelector(".scoreNumber");
+  // scoreNumber.textContent = "";
+  // clearInterval(levelInterval);
+  // clearInterval(dropIron);
+  // clearInterval(zombieMoove);
+  // clearInterval(speedIIntervalId);
+  // clearInterval(timerIdUp);
+  // clearInterval(keyInter);
+  // clearInterval(timerIdDown);
+  // clearInterval(touchInt);
+  // clearInterval(fallId);
+});

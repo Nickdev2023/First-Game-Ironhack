@@ -2,8 +2,17 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-family: "Press Start 2P", cursive;
 }
 
+h2 {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+}
+p {
+  font-size: 2rem;
+  margin-right: 1rem;
+}
 #background {
   background-image: url(./Images/Planet.jpg);
   background-size: cover;
@@ -17,23 +26,23 @@
 }
 #floor {
   /* display: flex; */
-  border: 1px solid aqua;
+  /* border: 1px solid aqua; */
   width: 45vw;
   height: 11vh;
 }
 
 #bottomFloor {
-  border: 1px solid aqua;
-  width: 30vw;
-  height: 3%;
+  border-top: 3px solid rgb(230, 66, 219);
+  width: 32vw;
+  height: 11%;
 }
 #endFloor {
-  border: 1px solid aqua;
+  /* border: 1px solid aqua; */
   width: 26vw;
   height: 15vh;
 }
 .actionPart {
-  border: 1px solid rgb(251, 0, 255);
+  /* border: 1px solid rgb(251, 0, 255); */
   width: 100vw;
   height: 45vh;
   position: absolute;
@@ -42,12 +51,18 @@
 
 .lifeAndScore {
   color: white;
-  border: 1px solid rgb(21, 255, 0);
+  /* border: 1px solid rgb(21, 255, 0); */
   width: 15vw;
   height: 15vh;
   position: absolute;
   margin-bottom: 80vh;
-  flex-direction: row-reverse;
+  text-align: center;
+  margin-left: 1rem;
+}
+.lifeDisplay {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .hero {
@@ -94,18 +109,20 @@
 
 .score {
   color: white;
-  border: 1px solid rgb(58, 51, 238);
+  /* border: 1px solid rgb(58, 51, 238); */
   width: 15vw;
   height: 15vh;
   position: absolute;
   margin-bottom: 80vh;
   margin-left: 80vw;
+  text-align: center;
 }
 .levelDisplay {
   color: white;
-  border: 1px solid rgb(255, 255, 255);
+  /* border: 1px solid rgb(255, 255, 255); */
   width: 15vw;
   height: 15vh;
+  text-align: center;
   position: absolute;
   margin-bottom: 80vh;
   margin-left: 40vw;
@@ -129,7 +146,8 @@
   height: 100vh;
 }
 
-#startButton {
+#startButton,
+#finishButton {
   position: absolute;
   border: none;
   top: 70vh;
@@ -147,13 +165,14 @@
   -webkit-box-shadow: 2px 1px 3px #ffffff;
   -moz-box-shadow: 2px 1px 3px #ffffff;
   box-shadow: 2px 1px 3px #ffffff;
-  font-family: Arial;
+  font-family: "Press Start 2P", cursive;
   color: #ffffff;
   font-size: 34px;
   padding: 10px 20px 10px 20px;
   text-decoration: none;
 }
-#startButton:hover {
+#startButton:hover,
+#finishButton:hover {
   background: #ffffff;
   background-image: -webkit-linear-gradient(top, #ffffff, #a200ff);
   background-image: -moz-linear-gradient(top, #ffffff, #a200ff);
