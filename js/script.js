@@ -8,6 +8,10 @@ window.onload = function () {
 };
 
 function startGame() {
+  let backSounds = new Audio("./Sounds/BackgroundSounds.mp3");
+  let sounds = setInterval(() => {
+    backSounds.play();
+  }, 22);
   background.style.display = "flex";
   firstScreen.style.display = "none";
   const heroMoving = document.querySelector(".hero");
@@ -32,10 +36,12 @@ function startGame() {
     switch (event.key) {
       case "ArrowLeft":
         heroMoving.classList.add("animHero");
+        heroMoving.classList.add("lefSide");
 
         break;
       case "ArrowRight":
         heroMoving.classList.add("animHero");
+        heroMoving.classList.remove("lefSide");
         break;
     }
   });
@@ -54,6 +60,7 @@ function startGame() {
     switch (event.key) {
       case "ArrowLeft":
         heroMoving.classList.remove("animHero");
+
         break;
       case "ArrowRight":
         heroMoving.classList.remove("animHero");
@@ -148,9 +155,11 @@ function startGame() {
     if (zombieBounding.right >= containerBounding.right - 30) {
       // console.log(circleBounding.right, containerBounding.right);
       direction = -1;
+      zombieMove.classList.add("lefSide");
     }
     if (zombieBounding.left <= containerBounding.left) {
       direction = 1;
+      zombieMove.classList.remove("lefSide");
     }
     bouncingCircleX += speed * direction;
 
@@ -191,15 +200,16 @@ function startGame() {
     let isInY =
       heroBounding.bottom > zombieBounding.top &&
       heroBounding.top < zombieBounding.bottom;
-
+    let touchSounds = new Audio("./Sounds/hurt.mp3");
     if (isInX && isInY) {
-      console.log("touche");
+      // console.log("touche");
       hasBeenTouch = true;
       let touchInt = setTimeout(() => {
         hasBeenTouch = false;
       }, 5000);
       lives--;
       lifeScore.textContent = lives;
+      touchSounds.play();
       if (lives <= 0) {
         lifeScore.textContent = 0;
         console.log("game over");
@@ -242,16 +252,18 @@ function startGame() {
     let isInX =
       heroBounding.left + 20 < giftsBounding.right - 20 &&
       heroBounding.right - 20 > giftsBounding.left + 20;
-    console.log(isInX);
+    // console.log(isInX);
     let isInY =
       heroBounding.bottom > giftsBounding.top &&
       heroBounding.top < giftsBounding.bottom;
 
+    let giftsSounds = new Audio("./Sounds/Bell.mp3");
     if (isInX && isInY) {
       // console.log("scored");
       score++;
       scoreNumber.textContent = score;
       gifts.classList.add("hidden");
+      giftsSounds.play();
     }
   }
 

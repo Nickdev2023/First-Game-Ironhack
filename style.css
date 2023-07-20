@@ -23,7 +23,7 @@ p {
   flex-direction: row;
   align-items: flex-end;
   position: relative;
-  animation: slide3 15s linear infinite;
+  animation: slide3 25s linear infinite;
 }
 
 @keyframes slide3 {
@@ -196,7 +196,7 @@ p {
   position: absolute;
   border: none;
   top: 70vh;
-  left: 48vw;
+  left: 45vw;
   background: #ffffff;
   background-image: -webkit-linear-gradient(top, #ffffff, #7401e0);
   background-image: -moz-linear-gradient(top, #ffffff, #6721ff);
@@ -226,4 +226,8 @@ p {
   background-image: linear-gradient(to bottom, #ffffff, #a200ff);
   text-decoration: none;
   border: none;
+}
+
+.lefSide {
+  transform: scaleX(-1);
 }
