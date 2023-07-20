@@ -23,6 +23,16 @@ p {
   flex-direction: row;
   align-items: flex-end;
   position: relative;
+  animation: slide3 15s linear infinite;
+}
+
+@keyframes slide3 {
+  0% {
+    background-position: 0px 0px;
+  }
+  100% {
+    background-position: -450px 0px;
+  }
 }
 #floor {
   /* display: flex; */
@@ -32,7 +42,7 @@ p {
 }
 
 #bottomFloor {
-  border-top: 3px solid rgb(230, 66, 219);
+  /* border-top: 3px solid rgb(230, 66, 219); */
   width: 32vw;
   height: 11%;
 }
@@ -67,20 +77,35 @@ p {
 
 .hero {
   position: absolute;
-  /* height: 7rem; */
   width: 6rem;
   aspect-ratio: 1;
-  /* border-radius: 100vh; */
-  /* border: 2px solid black; */
-  /* top: calc(89vh - 5rem); */
   left: 700px;
-  /* background-color: red; */
   background-image: url(./Images/Run.png);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
   bottom: 11vh;
 }
+
+.animHero {
+  animation: slide 100ms 100ms infinite;
+}
+
+@keyframes slide {
+  0% {
+    background-image: url(./Images/Run.png);
+  }
+  25% {
+    background-image: url(./Images/Run2.png);
+  }
+  50% {
+    background-image: url(./Images/Run.png);
+  }
+  100% {
+    background-image: url(./Images/Run2.png);
+  }
+}
+
 .zombie {
   position: absolute;
   /* height: 6rem; */
@@ -97,6 +122,26 @@ p {
   background-position: center center;
   bottom: 0vh;
 }
+
+.animZombie {
+  animation: slide2 500ms 500ms infinite;
+}
+
+@keyframes slide2 {
+  0% {
+    background-image: url(./Images/Walk.png);
+  }
+  25% {
+    background-image: url(./Images/Walk2.png);
+  }
+  50% {
+    background-image: url(./Images/Walk.png);
+  }
+  100% {
+    background-image: url(./Images/Walk2.png);
+  }
+}
+
 .hidden {
   display: none;
 }

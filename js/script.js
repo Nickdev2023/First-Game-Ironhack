@@ -21,12 +21,25 @@ function startGame() {
     switch (event.key) {
       case "ArrowLeft":
         pressedKeys.left = true;
+
         break;
       case "ArrowRight":
         pressedKeys.right = true;
         break;
     }
   });
+  window.addEventListener("keydown", (event) => {
+    switch (event.key) {
+      case "ArrowLeft":
+        heroMoving.classList.add("animHero");
+
+        break;
+      case "ArrowRight":
+        heroMoving.classList.add("animHero");
+        break;
+    }
+  });
+
   window.addEventListener("keyup", (event) => {
     switch (event.key) {
       case "ArrowLeft":
@@ -34,6 +47,16 @@ function startGame() {
         break;
       case "ArrowRight":
         pressedKeys.right = false;
+        break;
+    }
+  });
+  window.addEventListener("keyup", (event) => {
+    switch (event.key) {
+      case "ArrowLeft":
+        heroMoving.classList.remove("animHero");
+        break;
+      case "ArrowRight":
+        heroMoving.classList.remove("animHero");
         break;
     }
   });
