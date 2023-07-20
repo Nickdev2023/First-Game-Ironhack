@@ -1,156 +1,88 @@
-window.onload = function () {
-  const startButton = document.getElementById("startButton");
-  background.style.display = "none";
-  finishScreen.style.display = "none";
-  startButton.addEventListener("click", function () {
-    startGame();
-  });
-};
+const startButton = document.getElementById("startButton");
+startButton.addEventListener("click", function () {
+  startGame();
+});
+
+/**
+ * SELECTORS
+ */
+const zombieMove = document.querySelector(".zombie");
+const actionContainer = document.querySelector(".actionPart");
+const containerBounding = actionContainer.getBoundingClientRect();
+const background = document.getElementById("background");
+const lifeScore = document.querySelector(".life");
+const scoreNumber = document.querySelector(".scoreNumber");
+const heroMoving = document.querySelector(".hero");
+const levelToDisplay = document.querySelector(".level");
+const finishScreen = document.getElementById("finishScreen");
+background.style.display = "none";
+finishScreen.style.display = "none";
+
+/**
+ * AUDIO
+ */
+let giftsSounds = new Audio("./Sounds/Bell.mp3");
+let backSounds = new Audio("./Sounds/BackgroundSounds.mp3");
+let touchSounds = new Audio("./Sounds/hurt.mp3");
+let sounds;
+/**
+ * INTERVALS
+ */
+let levelInterval;
+let gameIntervalId;
+let speedIntervalId;
+let dropIron;
+let fallId;
+
+/**
+ * HERO
+ */
+const pressedKeys = { left: false, right: false };
+let positionX;
+let bottom = 0;
+let gravity = 0.9;
+let isJumping = false;
+let hasBeenTouch = false;
+let lives;
+let score;
+let bouncingCircleX = 0;
+let level = 0;
+/**
+ * ZOMBIE
+ */
+let direction = 1;
+let speed = 1;
+/**
+ * GIFTS
+ */
+let isFalling = false;
 
 function startGame() {
-  let backSounds = new Audio("./Sounds/BackgroundSounds.mp3");
-  let sounds = setInterval(() => {
+  backSounds.play();
+  sounds = setInterval(() => {
+    backSounds.pause();
+    backSounds.currentTime = 0;
     backSounds.play();
-  }, 22);
+  }, 22000);
   background.style.display = "flex";
   firstScreen.style.display = "none";
-  const heroMoving = document.querySelector(".hero");
-  let positionX = 700;
-  let lives = 5;
-  const mainContainer = document.querySelector("#background");
+  positionX = 700;
+  heroMoving.style.left = `${positionX}px`;
+  lives = 5;
+  lifeScore.textContent = lives;
+  score = 0;
+  scoreNumber.textContent = score;
 
-  const pressedKeys = { left: false, right: false };
+  levelToDisplay.textContent = 0;
 
-  window.addEventListener("keydown", (event) => {
-    switch (event.key) {
-      case "ArrowLeft":
-        pressedKeys.left = true;
-
-        break;
-      case "ArrowRight":
-        pressedKeys.right = true;
-        break;
-    }
-  });
-  window.addEventListener("keydown", (event) => {
-    switch (event.key) {
-      case "ArrowLeft":
-        heroMoving.classList.add("animHero");
-        heroMoving.classList.add("lefSide");
-
-        break;
-      case "ArrowRight":
-        heroMoving.classList.add("animHero");
-        heroMoving.classList.remove("lefSide");
-        break;
-    }
-  });
-
-  window.addEventListener("keyup", (event) => {
-    switch (event.key) {
-      case "ArrowLeft":
-        pressedKeys.left = false;
-        break;
-      case "ArrowRight":
-        pressedKeys.right = false;
-        break;
-    }
-  });
-  window.addEventListener("keyup", (event) => {
-    switch (event.key) {
-      case "ArrowLeft":
-        heroMoving.classList.remove("animHero");
-
-        break;
-      case "ArrowRight":
-        heroMoving.classList.remove("animHero");
-        break;
-    }
-  });
-
-  let keyInter = setInterval(() => {
+  // GAME ENGINE
+  gameIntervalId = setInterval(() => {
+    const zombieBounding = zombieMove.getBoundingClientRect();
     for (const key in pressedKeys) {
       if (pressedKeys[key]) {
         move(key);
       }
     }
-  }, 1000 / 60);
-
-  //
-
-  function move(direction) {
-    const containerBounding = mainContainer.getBoundingClientRect();
-    const heroBounding = heroMoving.getBoundingClientRect();
-    // console.log(containerBounding);
-
-    switch (direction) {
-      case "left":
-        if (heroBounding.left <= containerBounding.left) {
-          positionX = -30;
-        } else {
-          positionX -= 10;
-        }
-        break;
-
-      case "right":
-        if (heroBounding.right >= containerBounding.right - 10) {
-          positionX = containerBounding.width - heroBounding.width - 10;
-        } else {
-          positionX += 10;
-        }
-        break;
-    }
-
-    heroMoving.style.left = `${positionX}px`;
-  }
-
-  let bottom = 0;
-  let gravity = 0.9;
-  let isJumping = false;
-
-  function jump() {
-    if (isJumping) {
-      return;
-    }
-    let timerIdUp = setInterval(function () {
-      if (bottom > 250) {
-        clearInterval(timerIdUp);
-        let timerIdDown = setInterval(function () {
-          if (bottom < 85) {
-            clearInterval(timerIdDown);
-            bottom = 11;
-            isJumping = false;
-            heroMoving.style.bottom = bottom + "vh";
-            return;
-          }
-          bottom -= 5;
-          heroMoving.style.bottom = bottom + "px";
-        }, 10);
-      }
-      isJumping = true;
-      bottom += 85;
-      bottom *= gravity;
-      heroMoving.style.bottom = bottom + "px";
-    }, 10);
-  }
-
-  function control(e) {
-    //console.log(e);
-    if (e.key === " ") {
-      jump();
-    }
-  }
-  window.addEventListener("keydown", control);
-
-  const zombieMove = document.querySelector(".zombie");
-  let bouncingCircleX = 0;
-  let direction = 1;
-  let speed = 1;
-  const actionContainer = document.querySelector(".actionPart");
-  const containerBounding = actionContainer.getBoundingClientRect();
-
-  let zombieMoove = setInterval(() => {
-    const zombieBounding = zombieMove.getBoundingClientRect();
 
     if (zombieBounding.right >= containerBounding.right - 30) {
       // console.log(circleBounding.right, containerBounding.right);
@@ -170,66 +102,21 @@ function startGame() {
     }
   }, 1000 / 60);
 
-  let speedIIntervalId = setInterval(() => {
+  speedIntervalId = setInterval(() => {
     speed *= 1.05;
     if (speed > 30) {
       speed = 30;
     }
-    // if (bouncingCircleX > 1.5 * direction) {
-    //   clearInterval(speed);
-    //   // bouncingCircleX = 1.5 * direction;
-    // }
   }, 2000);
 
-  const lifeScore = document.querySelector(".life");
-  lifeScore.textContent = 5;
-  let hasBeenTouch = false;
+  dropIron = setInterval(() => {
+    const gifts = document.querySelector(".ironhack");
 
-  function checkCollision() {
-    const loveHearts = document.querySelectorAll(".love:not(.hidden)");
-
-    if (hasBeenTouch) {
-      return;
-    }
-    const zombieBounding = zombieMove.getBoundingClientRect();
-    const heroBounding = heroMoving.getBoundingClientRect();
-    let isInX =
-      heroBounding.left + 20 < zombieBounding.right - 20 &&
-      heroBounding.right - 20 > zombieBounding.left + 20;
-
-    let isInY =
-      heroBounding.bottom > zombieBounding.top &&
-      heroBounding.top < zombieBounding.bottom;
-    let touchSounds = new Audio("./Sounds/hurt.mp3");
-    if (isInX && isInY) {
-      // console.log("touche");
-      hasBeenTouch = true;
-      let touchInt = setTimeout(() => {
-        hasBeenTouch = false;
-      }, 5000);
-      lives--;
-      lifeScore.textContent = lives;
-      touchSounds.play();
-      if (lives <= 0) {
-        lifeScore.textContent = 0;
-        console.log("game over");
-        finishScreen.style.display = "flex";
-        background.style.display = "none";
-        return;
-      }
-      loveHearts[0].classList.add("hidden");
-    }
-  }
-
-  let isFalling = false;
-
-  const gifts = document.querySelector(".ironhack");
-  let dropIron = setInterval(() => {
     gifts.classList.remove("hidden");
     let top = 0;
     let leftRandom = Math.floor(Math.random() * 650 * 2);
     function fall() {
-      let fallId = setInterval(function () {
+      fallId = setInterval(function () {
         if (top > 598) {
           clearInterval(fallId);
         }
@@ -241,58 +128,215 @@ function startGame() {
     fall();
   }, 4000);
 
-  const scoreNumber = document.querySelector(".scoreNumber");
-  scoreNumber.textContent = 0;
-  let score = 0;
-
-  function checkScore() {
-    const giftsBounding = gifts.getBoundingClientRect();
-    const heroBounding = heroMoving.getBoundingClientRect();
-
-    let isInX =
-      heroBounding.left + 20 < giftsBounding.right - 20 &&
-      heroBounding.right - 20 > giftsBounding.left + 20;
-    // console.log(isInX);
-    let isInY =
-      heroBounding.bottom > giftsBounding.top &&
-      heroBounding.top < giftsBounding.bottom;
-
-    let giftsSounds = new Audio("./Sounds/Bell.mp3");
-    if (isInX && isInY) {
-      // console.log("scored");
-      score++;
-      scoreNumber.textContent = score;
-      gifts.classList.add("hidden");
-      giftsSounds.play();
-    }
-  }
-
-  const LevelToDisplay = document.querySelector(".level");
-  LevelToDisplay.textContent = 0;
-  let Level = 0;
-
-  let levelInterval = setInterval(() => {
-    Level++;
-    LevelToDisplay.textContent = Level;
+  levelInterval = setInterval(() => {
+    level++;
+    levelToDisplay.textContent = level;
   }, 25000);
 }
+
 const finishButton = document.getElementById("finishButton");
 finishButton.addEventListener("click", () => {
-  location.reload();
+  // location.reload();
   // background.style.display = "none";
-  // finishScreen.style.display = "none";
+  finishScreen.style.display = "none";
   // firstScreen.style.display = "flex";
   // const lifeScore = document.querySelector(".life");
-  // lifeScore.textContent = "";
+  lifeScore.textContent = "";
   // const scoreNumber = document.querySelector(".scoreNumber");
   // scoreNumber.textContent = "";
-  // clearInterval(levelInterval);
-  // clearInterval(dropIron);
-  // clearInterval(zombieMoove);
-  // clearInterval(speedIIntervalId);
-  // clearInterval(timerIdUp);
-  // clearInterval(keyInter);
-  // clearInterval(timerIdDown);
-  // clearInterval(touchInt);
-  // clearInterval(fallId);
+  const allIntervals = [
+    levelInterval,
+    gameIntervalId,
+    speedIntervalId,
+    dropIron,
+    fallId,
+  ];
+
+  for (const interval of allIntervals) {
+    clearInterval(interval);
+  }
+  console.log(allIntervals);
+  level = 0;
+  bottom = 0;
+  isJumping = false;
+  hasBeenTouch = false;
+  bouncingCircleX = 0;
+  direction = 1;
+  speed = 1;
+  isFalling = false;
+
+  startGame();
 });
+
+function move(direction) {
+  const containerBounding = background.getBoundingClientRect();
+  const heroMoving = document.querySelector(".hero");
+
+  const heroBounding = heroMoving.getBoundingClientRect();
+
+  // console.log(containerBounding);
+
+  switch (direction) {
+    case "left":
+      if (heroBounding.left <= containerBounding.left) {
+        positionX = -30;
+      } else {
+        positionX -= 10;
+      }
+      break;
+
+    case "right":
+      if (heroBounding.right >= containerBounding.right - 10) {
+        positionX = containerBounding.width - heroBounding.width - 10;
+      } else {
+        positionX += 10;
+      }
+      break;
+  }
+
+  heroMoving.style.left = `${positionX}px`;
+}
+
+function checkScore() {
+  const heroMoving = document.querySelector(".hero");
+  const gifts = document.querySelector(".ironhack");
+
+  const giftsBounding = gifts.getBoundingClientRect();
+  const heroBounding = heroMoving.getBoundingClientRect();
+
+  let isInX =
+    heroBounding.left + 20 < giftsBounding.right - 20 &&
+    heroBounding.right - 20 > giftsBounding.left + 20;
+  // console.log(isInX);
+  let isInY =
+    heroBounding.bottom > giftsBounding.top &&
+    heroBounding.top < giftsBounding.bottom;
+
+  if (isInX && isInY) {
+    // console.log("scored");
+    score++;
+    scoreNumber.textContent = score;
+    gifts.classList.add("hidden");
+    giftsSounds.play();
+  }
+}
+
+function jump() {
+  const heroMoving = document.querySelector(".hero");
+
+  if (isJumping) {
+    return;
+  }
+  let timerIdUp = setInterval(function () {
+    if (bottom > 250) {
+      clearInterval(timerIdUp);
+      let timerIdDown = setInterval(function () {
+        if (bottom < 85) {
+          clearInterval(timerIdDown);
+          bottom = 11;
+          isJumping = false;
+          heroMoving.style.bottom = bottom + "vh";
+          return;
+        }
+        bottom -= 5;
+        heroMoving.style.bottom = bottom + "px";
+      }, 10);
+    }
+    isJumping = true;
+    bottom += 85;
+    bottom *= gravity;
+    heroMoving.style.bottom = bottom + "px";
+  }, 10);
+}
+
+function checkCollision() {
+  const heroMoving = document.querySelector(".hero");
+
+  const loveHearts = document.querySelectorAll(".love:not(.hidden)");
+
+  if (hasBeenTouch) {
+    return;
+  }
+  const zombieBounding = zombieMove.getBoundingClientRect();
+  const heroBounding = heroMoving.getBoundingClientRect();
+  let isInX =
+    heroBounding.left + 20 < zombieBounding.right - 20 &&
+    heroBounding.right - 20 > zombieBounding.left + 20;
+
+  let isInY =
+    heroBounding.bottom > zombieBounding.top &&
+    heroBounding.top < zombieBounding.bottom;
+  if (isInX && isInY) {
+    // console.log("touche");
+    hasBeenTouch = true;
+    let touchInt = setTimeout(() => {
+      hasBeenTouch = false;
+    }, 5000);
+    lives--;
+    lifeScore.textContent = lives;
+    touchSounds.play();
+    if (lives <= 0) {
+      lifeScore.textContent = 0;
+      console.log("game over");
+      finishScreen.style.display = "flex";
+      background.style.display = "none";
+      return;
+    }
+    loveHearts[0].classList.add("hidden");
+  }
+}
+
+function control(e) {
+  //console.log(e);
+  if (e.key === " ") {
+    jump();
+  }
+}
+
+window.addEventListener("keydown", (event) => {
+  switch (event.key) {
+    case "ArrowLeft":
+      pressedKeys.left = true;
+
+      break;
+    case "ArrowRight":
+      pressedKeys.right = true;
+      break;
+  }
+});
+window.addEventListener("keydown", (event) => {
+  switch (event.key) {
+    case "ArrowLeft":
+      heroMoving.classList.add("animHero");
+      heroMoving.classList.add("lefSide");
+
+      break;
+    case "ArrowRight":
+      heroMoving.classList.add("animHero");
+      heroMoving.classList.remove("lefSide");
+      break;
+  }
+});
+
+window.addEventListener("keyup", (event) => {
+  switch (event.key) {
+    case "ArrowLeft":
+      pressedKeys.left = false;
+      break;
+    case "ArrowRight":
+      pressedKeys.right = false;
+      break;
+  }
+});
+window.addEventListener("keyup", (event) => {
+  switch (event.key) {
+    case "ArrowLeft":
+      heroMoving.classList.remove("animHero");
+
+      break;
+    case "ArrowRight":
+      heroMoving.classList.remove("animHero");
+      break;
+  }
+});
+window.addEventListener("keydown", control);

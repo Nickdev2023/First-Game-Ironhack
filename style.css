@@ -231,3 +231,10 @@ p {
 .lefSide {
   transform: scaleX(-1);
 }
+
+.endGame {
+  color: white;
+  margin-top: 30vh;
+  margin-left: 40vw;
+  font-size: 6rem;
+}
