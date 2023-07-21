@@ -10,6 +10,7 @@ const zombieMove = document.querySelector(".zombie");
 const actionContainer = document.querySelector(".actionPart");
 const containerBounding = actionContainer.getBoundingClientRect();
 const background = document.getElementById("background");
+const backgroundBounding = background.getBoundingClientRect();
 const lifeScore = document.querySelector(".life");
 const scoreNumber = document.querySelector(".scoreNumber");
 const heroMoving = document.querySelector(".hero");
@@ -114,17 +115,21 @@ function startGame() {
 
     gifts.classList.remove("hidden");
     let top = 0;
-    let leftRandom = Math.floor(Math.random() * 650 * 2);
+    let leftRandom = Math.floor(
+      Math.random() * backgroundBounding.width - gifts.width
+    );
     function fall() {
       fallId = setInterval(function () {
-        if (top > 598) {
+        const bottomOffset = (backgroundBounding.height / 100) * 15;
+        // console.log(bottomOffset, backgroundBounding);
+        if (top > backgroundBounding.height - bottomOffset - gifts.height) {
           clearInterval(fallId);
         }
         top += 30;
         gifts.style.top = top + "px";
       }, 20);
     }
-    gifts.style.left = leftRandom + "px";
+    gifts.style.left = leftRandom + "px ";
     fall();
   }, 4000);
 
@@ -166,6 +171,9 @@ finishButton.addEventListener("click", () => {
   isFalling = false;
 
   startGame();
+  const loveHearts = document.querySelectorAll(".love");
+
+  loveHearts.forEach((heart) => heart.classList.remove("hidden"));
 });
 
 function move(direction) {
